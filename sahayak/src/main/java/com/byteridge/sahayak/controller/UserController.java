@@ -20,7 +20,8 @@ public class UserController {
         try{
             return userService.findAll();
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             return Collections.EMPTY_LIST;
 
         }
