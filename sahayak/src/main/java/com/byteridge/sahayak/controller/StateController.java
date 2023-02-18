@@ -5,6 +5,8 @@ import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.model.State;
 import com.byteridge.sahayak.repository.StateRepository;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,6 +22,7 @@ import java.util.Map;
 @RestController
 public class StateController extends ValidationException {
 
+    private static final Logger logger = LoggerFactory.getLogger(StateController.class);
     @Autowired
     StateRepository stateRepository;
 
@@ -55,11 +58,13 @@ public class StateController extends ValidationException {
     ResponseEntity<Response> getAllStates()
     {
         try {
+            logger.info("State Fetched Successfully");
             List<State> states = stateRepository.findAll();
             return ResponseEntity.ok(new Response(true,states,null));
         }
         catch (Exception e)
         {
+            logger.error(e.getMessage());
             return new ResponseEntity(new Response(false,e.getMessage(),null), HttpStatusCode.valueOf(500));
 
         }
