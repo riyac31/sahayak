@@ -44,15 +44,12 @@ public class Hospital {
     @Field(value = "password",targetType = FieldType.STRING)
     private String password;
 
-
-    @JsonProperty("image")
-    @Field(value = "image",targetType = FieldType.STRING)
-    private String image;
+    @Field(value = "image_id",targetType = FieldType.OBJECT_ID)
+    private String image_id;
 
     @Valid
     @JsonProperty("address")
     @Field(value = "address")
-    @BsonProperty("address")
     private Address address;
 
     public ObjectId getId() {
@@ -95,19 +92,19 @@ public class Hospital {
         this.password = password;
     }
 
-    public String getImage() {
-        return image;
+    public String getImage_id() {
+        return image_id;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage_id(String image_id) {
+        this.image_id = image_id;
     }
 
-//    public Address getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(Address address) {
-//        this.address = address;
-//    }
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }
