@@ -1,33 +1,53 @@
 package com.byteridge.sahayak.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "address")
 public class Address {
 
-    private int stateId;
-    private int cityId;
+
+    @JsonProperty("state_name")
+    @NotBlank
+    @Field(value = "state")
+    private String stateName;
+    @JsonProperty("city_name")
+    @NotBlank
+    @Field(value = "city")
+    private String cityName;
+
+    @JsonProperty("pincode")
+    @NotBlank
+    @Field(value = "pincode")
 
     private String pincode;
+    @JsonProperty("area")
+    @NotBlank
+    @Field(value = "area")
+
     private String area;
+
+    @JsonProperty("street")
+    @Field(value = "street")
 
     private String street;
 
-
-    public int getStateId() {
-        return stateId;
+    public String getStateName() {
+        return stateName;
     }
 
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
     }
 
-    public int getCityId() {
-        return cityId;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public String getPincode() {
@@ -52,16 +72,5 @@ public class Address {
 
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "stateId=" + stateId +
-                ", cityId=" + cityId +
-                ", pincode='" + pincode + '\'' +
-                ", area='" + area + '\'' +
-                ", street='" + street + '\'' +
-                '}';
     }
 }
