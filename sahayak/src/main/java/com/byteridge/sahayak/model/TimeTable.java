@@ -23,8 +23,6 @@ public class TimeTable {
 
     @Field("doctor_id")
     @JsonProperty("doctor_id")
-    @NotBlank
-    @BsonRepresentation(BsonType.OBJECT_ID)
     private ObjectId doctor_id;
 
     @Field("week_schedule")
@@ -48,8 +46,8 @@ public class TimeTable {
         this.id = id;
     }
 
-    public ObjectId getDoctor_id() {
-        return doctor_id;
+    public String getDoctor_id() {
+        return doctor_id.toString();
     }
 
     public void setDoctor_id(ObjectId doctor_id) {

@@ -50,10 +50,10 @@ public class Hospital {
     @Valid
     @JsonProperty("address")
     @Field(value = "address")
-    private Address address;
+    public Address address;
 
-    public ObjectId getId() {
-        return id;
+    public String getId() {
+        return id.toString();
     }
 
     public void setId(ObjectId id) {

@@ -3,6 +3,7 @@ package com.byteridge.sahayak.controller;
 import com.byteridge.sahayak.model.Doctor;
 import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.repository.DoctorsRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class DoctorsController {
     DoctorsRepository doctorsRepository;
     private static final Logger logger = LoggerFactory.getLogger(HospitalController.class);
     @PostMapping("/doctor")
-    ResponseEntity<Response> addDoctor(@RequestBody Doctor doctor)
+    ResponseEntity<Response> addDoctor(@Valid @RequestBody Doctor doctor)
     {
             try{
                 logger.info("Doctor "+doctor.getFull_name()+" saved Successffully");

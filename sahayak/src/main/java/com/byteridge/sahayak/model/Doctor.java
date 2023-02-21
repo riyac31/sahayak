@@ -3,6 +3,9 @@ package com.byteridge.sahayak.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import org.bson.BsonType;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -42,6 +45,10 @@ public class Doctor {
     @Field(value = "education")
     private String education;
 
+    @Field("hospital_id")
+    @JsonProperty("hospital_id")
+    @BsonRepresentation(BsonType.OBJECT_ID)
+    private ObjectId hospital_id;
 
     public String getId() {
         return id;
@@ -97,5 +104,13 @@ public class Doctor {
 
     public void setEducation(String education) {
         this.education = education;
+    }
+
+    public ObjectId getHospital_id() {
+        return hospital_id;
+    }
+
+    public void setHospital_id(ObjectId hospital_id) {
+        this.hospital_id = hospital_id;
     }
 }

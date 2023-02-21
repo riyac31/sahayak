@@ -35,19 +35,19 @@ public class Address {
     private String street;
 
     public String getStateName() {
-        return stateName;
+        return stateName.toLowerCase();
     }
 
     public void setStateName(String stateName) {
-        this.stateName = stateName;
+        this.stateName = stateName.toLowerCase();
     }
 
     public String getCityName() {
-        return cityName;
+        return cityName.toLowerCase();
     }
 
     public void setCityName(String cityName) {
-        this.cityName = cityName;
+        this.cityName = cityName.toLowerCase();
     }
 
     public String getPincode() {
