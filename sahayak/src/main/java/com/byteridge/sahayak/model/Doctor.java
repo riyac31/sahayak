@@ -106,8 +106,8 @@ public class Doctor {
         this.education = education;
     }
 
-    public ObjectId getHospital_id() {
-        return hospital_id;
+    public String getHospital_id() {
+        return hospital_id.toString();
     }
 
     public void setHospital_id(ObjectId hospital_id) {

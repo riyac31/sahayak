@@ -4,15 +4,13 @@ import com.byteridge.sahayak.model.Doctor;
 import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.repository.DoctorsRepository;
 import jakarta.validation.Valid;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +43,24 @@ public class DoctorsController {
         try{
 
             List<Doctor> doctors =  doctorsRepository.findAll();
+            logger.info("Doctors Responded Successfully");
+
+            return new ResponseEntity(new Response(true,doctors,""), HttpStatus.OK);
+
+        }
+        catch (Exception e)
+        {
+            logger.error(e.getMessage());
+            return new ResponseEntity(new Response(false,null,e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/hospitalDoctor/{hospital_doctor}")
+    ResponseEntity<Response> gethospitalDoctor(@PathVariable(value = "hospital_doctor") ObjectId hospitalId)
+    {
+        try{
+
+            List<Doctor> doctors =  doctorsRepository.getDoctorByHospitalId(hospitalId);
             logger.info("Doctors Responded Successfully");
 
             return new ResponseEntity(new Response(true,doctors,""), HttpStatus.OK);
