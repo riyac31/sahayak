@@ -16,7 +16,7 @@ public class Doctor {
     @Id
     private String id;
 
-    @NotBlank
+
     @JsonProperty("first_name")
     @Field(value = "first_name")
     private String first_name;
@@ -26,10 +26,12 @@ public class Doctor {
     @Field(value = "last_name")
     private String last_name;
 
+    @NotBlank
     @JsonProperty("full_name")
     @Field(value = "full_name")
     private String full_name;
 
+    @NotBlank
     @JsonProperty("specialization")
     @Field(value = "specialization")
     private String specialization;
@@ -40,7 +42,7 @@ public class Doctor {
 
 
 
-
+    @NotBlank
     @JsonProperty("education")
     @Field(value = "education")
     private String education;
