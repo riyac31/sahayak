@@ -5,18 +5,20 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-@AllArgsConstructor
+
 @NoArgsConstructor
-@Data
-@Document(collection = "schedulebyHospital")
-@ToString
+@AllArgsConstructor
 @Builder
-public class SchedulebyHos {
+@Data
+@ToString
+@Document(collection = "schedulebyTime")
+public class SchedulebyTime {
     @Id
     private String id;
     private String hospitalId;
     private String doctorId;
     private String patient_name;
     private Date appointmentDate;
+
     private String appointmentTime;
 }

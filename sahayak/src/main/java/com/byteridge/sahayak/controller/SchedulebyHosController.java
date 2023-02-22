@@ -23,4 +23,8 @@ public class SchedulebyHosController {
     public List<SchedulebyHos> getAppointmentsByHospitalId(@PathVariable String hospitalId){
         return service.getAppointmentsByHospitalId(hospitalId);
     }
+    @GetMapping("/{time}")
+    public List<SchedulebyHos> getAppointmentsByTime(@PathVariable String Time){
+        return service.getAppointmentsByTime(Time);
+    }
 }

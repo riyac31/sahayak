@@ -55,5 +55,20 @@ public class AppointmentController extends ValidationException {
         }
     }
 
+    @GetMapping("/hospitalAppointment/{time}")
+    ResponseEntity<Response> hospitalAppointmentbyTime(@PathVariable(value = "time") String time)
+    {
+        try
+        {
+            System.out.println(time.toString());
+            List<Appointment> appointmentList =  appointmentRepository.findAllByAppointmentTime(time);
+            log.info("Appointment Fetched Successfully");
+            return new ResponseEntity(new Response(true,appointmentList,"Appointment Fetched Successfully"), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity(new Response(true,e.getMessage(),"Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
 }

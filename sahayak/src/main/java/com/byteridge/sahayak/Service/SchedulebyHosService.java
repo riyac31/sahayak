@@ -9,14 +9,20 @@ import java.util.List;
 @Service
 
 public class SchedulebyHosService {
-    private final SchedulebyHosRepository repository;
+//    private final SchedulebyHosRepository repository;
 
-   @Autowired
-    public SchedulebyHosService(SchedulebyHosRepository repository) {
-        this.repository = repository;
-    }
-
+//   @Autowired
+//    public SchedulebyHosService(SchedulebyHosRepository repository) {
+//        this.repository = repository;
+//    }
+@Autowired
+SchedulebyHosRepository schedulebyHosRepository;
     public List<SchedulebyHos> getAppointmentsByHospitalId(String hospitalId) {
-        return repository.findByHospitalId(hospitalId);
+        return schedulebyHosRepository.findByHospitalId(hospitalId);
+
+    }
+    public List<SchedulebyHos> getAppointmentsByTime(String Time) {
+        return schedulebyHosRepository.findByAppointmentTime(Time);
+
     }
 }
