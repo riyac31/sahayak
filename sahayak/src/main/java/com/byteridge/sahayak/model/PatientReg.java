@@ -30,9 +30,9 @@ public class PatientReg {
         @Field(value = "last_name")
         private String last_name;
 
-        @JsonProperty("full_name")
-        @Field(value = "full_name")
-        private String full_name;
+        @JsonProperty("patient_name")
+        @Field(value = "patient_name")
+        private String patient_name;
 
         @JsonProperty("disease")
         @Field(value = "disease")

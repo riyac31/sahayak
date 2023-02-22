@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="sahayak" target="17" />
+      <module name="sahayak" target="1.6" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
