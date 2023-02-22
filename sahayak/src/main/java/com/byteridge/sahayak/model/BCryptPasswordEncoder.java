@@ -1,18 +1,18 @@
 package com.byteridge.sahayak.model;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
+import org.springframework.stereotype.Component;
+@Component
 public class BCryptPasswordEncoder {
-    @Configuration
-    public class SecurityConfig {
+//    @Configuration
+//    public class SecurityConfig {
+//
+//        @Bean
+//        public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//            return new BCryptPasswordEncoder();
+//        }
+//
+//    }
 
-        @Bean
-        public BCryptPasswordEncoder bCryptPasswordEncoder() {
-            return new BCryptPasswordEncoder();
-        }
-
-    }
     private static final int STRENGTH = 12;
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 

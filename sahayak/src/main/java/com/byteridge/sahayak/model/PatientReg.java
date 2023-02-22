@@ -1,10 +1,7 @@
 package com.byteridge.sahayak.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -20,7 +17,6 @@ public class PatientReg {
         @Id
         private String id;
 
-        @NotBlank
         @JsonProperty("first_name")
         @Field(value = "first_name")
         private String first_name;
@@ -43,16 +39,17 @@ public class PatientReg {
         private String age;
 
 
-        @NotBlank
+        @NonNull
         @JsonProperty("email")
         @Field(value = "email")
         private String email;
-        @NotBlank
+
+        @NonNull
         @JsonProperty("phone_no")
         @Field(value = "phone_no")
         private String phone_no;
 
-        @NotBlank
+        @NonNull
         @JsonProperty("password")
         @Field(value = "password")
         private String password;
