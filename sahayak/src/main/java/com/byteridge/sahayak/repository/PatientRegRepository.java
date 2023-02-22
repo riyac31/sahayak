@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRegRepository extends MongoRepository<PatientReg,String> {
    public PatientReg findByEmail(String email);
+
+
 }

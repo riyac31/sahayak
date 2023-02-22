@@ -47,7 +47,19 @@ public class PatientReg {
         @JsonProperty("email")
         @Field(value = "email")
         private String email;
+        @NotBlank
+        @JsonProperty("phone_no")
+        @Field(value = "phone_no")
+        private String phone_no;
 
+        @NotBlank
+        @JsonProperty("password")
+        @Field(value = "password")
+        private String password;
+        public void setPassword(String password) {
+                // Hash the password using bcrypt
+                this.password = new BCryptPasswordEncoder().encode(password);
+        }
 
 
 

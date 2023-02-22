@@ -22,5 +22,8 @@ public class PatientRegRequest {
     private String age;
     private String email;
 
+    private String phone_no;
+    private String password;
+
 
 }
