@@ -4,25 +4,22 @@ import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.model.TimeTable;
 import com.byteridge.sahayak.repository.TimeTableRepository;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 public class TimeTableController {
 
     @Autowired
     private TimeTableRepository timeTableRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(HospitalController.class);
     @PostMapping("/schedule")
     ResponseEntity<Response> addSchedule(@Valid @RequestBody TimeTable timeTable)
     {
@@ -57,7 +54,7 @@ public class TimeTableController {
         {
             System.out.println(doctor_id);
             List<TimeTable> timeTableList  = timeTableRepository.findByDoctorId(doctor_id);
-            logger.info("Time Table For Doctor "+doctor_id+" fetched Successfully");
+            log.info("Time Table For Doctor "+doctor_id+" fetched Successfully");
             return new ResponseEntity(new Response(true,timeTableList,"Schedule Added Successfully"), HttpStatus.OK);
 
         }

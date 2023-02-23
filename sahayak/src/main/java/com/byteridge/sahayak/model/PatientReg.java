@@ -1,10 +1,7 @@
 package com.byteridge.sahayak.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -20,7 +17,6 @@ public class PatientReg {
         @Id
         private String id;
 
-        @NotBlank
         @JsonProperty("first_name")
         @Field(value = "first_name")
         private String first_name;
@@ -30,9 +26,9 @@ public class PatientReg {
         @Field(value = "last_name")
         private String last_name;
 
-        @JsonProperty("full_name")
-        @Field(value = "full_name")
-        private String full_name;
+        @JsonProperty("patient_name")
+        @Field(value = "patient_name")
+        private String patient_name;
 
         @JsonProperty("disease")
         @Field(value = "disease")
@@ -43,11 +39,24 @@ public class PatientReg {
         private String age;
 
 
-        @NotBlank
+        @NonNull
         @JsonProperty("email")
         @Field(value = "email")
         private String email;
 
+        @NonNull
+        @JsonProperty("phone_no")
+        @Field(value = "phone_no")
+        private String phone_no;
+
+        @NonNull
+        @JsonProperty("password")
+        @Field(value = "password")
+        private String password;
+        public void setPassword(String password) {
+                // Hash the password using bcrypt
+                this.password = new BCryptPasswordEncoder().encode(password);
+        }
 
 
 

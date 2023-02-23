@@ -2,7 +2,6 @@ package com.byteridge.sahayak.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.bson.BsonType;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -36,9 +35,9 @@ public class Appointment {
     @JsonProperty( "appointment_date")
     private Date appointment_date;
 
-    @Field(value = "appointment_time")
-    @JsonProperty( "appointment_time")
-    private String appointment_time;
+    @Field(value = "appointmentTime")
+    @JsonProperty( "appointmentTime")
+    private String appointmentTime;
 
 
     @Field(value = "doctor")
@@ -79,11 +78,11 @@ public class Appointment {
     }
 
     public String getAppointment_time() {
-        return appointment_time;
+        return appointmentTime;
     }
 
     public void setAppointment_time(String appointment_time) {
-        this.appointment_time = appointment_time;
+        this.appointmentTime = appointmentTime;
     }
 
     public Doctor getDoctor() {

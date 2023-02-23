@@ -52,13 +52,18 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
+<<<<<<< HEAD
 </project>
+=======
+<build>
+<plugins>
+	<plugin>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-maven-plugin</artifactId>
+	</plugin>
+</plugins>
+</build>
+
+		</project>
+>>>>>>> 82fbeadaa5fa46a3bcb28b86e32d7243fad64042
