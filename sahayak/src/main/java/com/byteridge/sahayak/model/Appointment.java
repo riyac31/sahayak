@@ -22,6 +22,11 @@ public class Appointment {
     private ObjectId id;
 
     @BsonRepresentation(BsonType.OBJECT_ID)
+    @Field(value = "patient_id")
+    @JsonProperty("patient_id")
+    private ObjectId patientId;
+
+    @BsonRepresentation(BsonType.OBJECT_ID)
     @Field(value = "hospital_id")
     @JsonProperty("hospital_id")
     private ObjectId hospitalId;
@@ -106,4 +111,11 @@ public class Appointment {
         this.doctor = doctor;
     }
 
+    public ObjectId getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(ObjectId patientId) {
+        this.patientId = patientId;
+    }
 }
