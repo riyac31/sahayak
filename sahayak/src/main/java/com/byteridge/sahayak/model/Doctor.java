@@ -41,12 +41,20 @@ public class Doctor {
     private String experience;
 
 
-
     @NotBlank
     @JsonProperty("education")
     @Field(value = "education")
     private String education;
 
+
+    @JsonProperty("average_consultation_time")
+    @Field(value = "average_consultation_time")
+    private int averageConsultationTime;
+
+    @NotBlank
+    @JsonProperty("price")
+    @Field(value = "price")
+    private String price;
     @Field("hospital_id")
     @JsonProperty("hospital_id")
     @BsonRepresentation(BsonType.OBJECT_ID)
@@ -114,5 +122,21 @@ public class Doctor {
 
     public void setHospital_id(ObjectId hospital_id) {
         this.hospital_id = hospital_id;
+    }
+
+    public int getAverageConsultationTime() {
+        return averageConsultationTime;
+    }
+
+    public void setAverageConsultationTime(int averageConsultationTime) {
+        this.averageConsultationTime = averageConsultationTime;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

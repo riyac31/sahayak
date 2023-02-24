@@ -13,5 +13,4 @@ public interface AppointmentRepository extends MongoRepository<Appointment, Obje
 
     @Query("{hospital_id :?0 }")
     List<Appointment> getByHospitalId(ObjectId hospital_id);
-    List<Appointment> findAllByAppointmentTime(String time);
 }
