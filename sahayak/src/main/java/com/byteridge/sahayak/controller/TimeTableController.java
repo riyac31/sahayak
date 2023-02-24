@@ -1,7 +1,9 @@
 package com.byteridge.sahayak.controller;
 
+import com.byteridge.sahayak.model.Doctor;
 import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.model.TimeTable;
+import com.byteridge.sahayak.repository.DoctorsRepository;
 import com.byteridge.sahayak.repository.TimeTableRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ public class TimeTableController {
 
     @Autowired
     private TimeTableRepository timeTableRepository;
+
+    @Autowired
+    private DoctorsRepository doctorsRepository;
 
     @PostMapping("/schedule")
     ResponseEntity<Response> addSchedule(@Valid @RequestBody TimeTable timeTable)
@@ -87,6 +92,10 @@ public class TimeTableController {
 //            System.out.println(dayOfWeek);
             TimeTable doctorTimeTable = timeTableRepository.findByDoctorId(doctor_id).get(0);
 
+            Doctor doctor = doctorsRepository.findOneById(doctor_id);
+
+            Integer averageConsultationTime = doctor.getAverageConsultationTime();
+
             String startTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(0);
 
             String endTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(1);
@@ -97,7 +106,7 @@ public class TimeTableController {
 
             Date endTimeFormat = formatter.parse(endTime);
 
-            //String formattedDateString = formatter.format(date);
+//            String formattedDateString = formatter.format(date);
 //            System.out.println(startTime);
 //            System.out.println(endTime);
 //            System.out.println(startTimeFormat.getTime());
@@ -130,11 +139,12 @@ public class TimeTableController {
                 cal.add(Calendar.HOUR_OF_DAY, 1);
                 Date slotStartTime = startTimeFormat;
                 Date slotEndTime;
-                System.out.println(cal.getTime());
+
+                // System.out.println(cal.getTime());
+
                 if(endTimeFormat.compareTo(cal.getTime())<0)
                 {
                     slotEndTime = endTimeFormat;
-                    System.out.println(slotEndTime);
                 }
                 else
                 {
@@ -142,12 +152,20 @@ public class TimeTableController {
                 }
                 startTimeFormat = slotEndTime;
                 List<String> tmp = new ArrayList<String>();
+                long difference_In_Slot_Time = slotEndTime.getTime() - slotStartTime.getTime();
+
+                long difference_In_Slot_Time_Minutes
+                        = (difference_In_Slot_Time
+                        / (1000 * 60));
+                System.out.println(difference_In_Slot_Time_Minutes);
+                long numberOfAppointmentsAllowed = difference_In_Slot_Time_Minutes/averageConsultationTime + 1;
                 tmp.add(slotStartTime.getHours()+ ":" + slotStartTime.getMinutes());
                 tmp.add(slotEndTime.getHours()+ ":" + slotEndTime.getMinutes());
+                tmp.add(String.valueOf(numberOfAppointmentsAllowed));
                 timeSlots.add(tmp);
             }
 
-            return new ResponseEntity(new Response(true,timeSlots,"Schedule Added Successfully"), HttpStatus.OK);
+            return new ResponseEntity(new Response(true, timeSlots,"Schedule Added Successfully"), HttpStatus.OK);
 
         }
         catch (Exception e)

@@ -11,4 +11,8 @@ public interface DoctorsRepository extends MongoRepository<Doctor,String> {
 
     @Query("{hospital_id:?0}")
     List<Doctor> getDoctorByHospitalId(ObjectId hospitalId);
+
+
+    Doctor findOneById(ObjectId doctorId);
+
 }
