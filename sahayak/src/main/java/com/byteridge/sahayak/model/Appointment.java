@@ -18,7 +18,7 @@ public class Appointment {
 
     @BsonId
     @Id
-    @BsonProperty("_id")
+    @BsonProperty("id")
     private ObjectId id;
 
     @BsonRepresentation(BsonType.OBJECT_ID)
@@ -38,6 +38,12 @@ public class Appointment {
     @Field(value = "appointmentTime")
     @JsonProperty( "appointmentTime")
     private String appointmentTime;
+    @Field(value = "starttTime")
+    @JsonProperty( "startTime")
+    private String startTime;
+    @Field(value = "endTime")
+    @JsonProperty( "endTime")
+    private String endTime;
 
 
     @Field(value = "doctor")
@@ -77,14 +83,31 @@ public class Appointment {
         this.appointment_date = appointment_date;
     }
 
-    public String getAppointment_time() {
+    public String getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointment_time(String appointment_time) {
+    public void setAppointmentTime(String appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 
+    public String getStart_time() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+
+
+    public void setEndTime(String endtime) {
+        this.endTime = endTime;
+    }
+
+    public String getEnd_time() {
+        return startTime;
+    }
     public Doctor getDoctor() {
         return doctor;
     }
