@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -75,24 +73,81 @@ public class TimeTableController {
         try
         {
 
-            System.out.println(doctor_id);
-            System.out.println(date);
-            LocalDate localDate = LocalDate.parse(date);
-            System.out.println(localDate);
-            DayOfWeek day = localDate.getDayOfWeek();
-            int dayOfWeek = day.getValue() -1 ;
-            System.out.println(day);
-            System.out.println(dayOfWeek);
-            TimeTable doctorTimeTable = timeTableRepository.findByDoctorId(doctor_id).get(0);
-            String startTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(0);
-            String endTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(1);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.ENGLISH);
-            Date startTimeFormat = formatter.parse(startTime);
-            //String formattedDateString = formatter.format(date);
-            System.out.println(startTime);
-            System.out.println(endTime);
+//            System.out.println(doctor_id);
+//            System.out.println(date);
 
-            return new ResponseEntity(new Response(true,doctorTimeTable,"Schedule Added Successfully"), HttpStatus.OK);
+            LocalDate localDate = LocalDate.parse(date);
+
+            //    System.out.println(localDate);
+
+            DayOfWeek day = localDate.getDayOfWeek();
+
+            int dayOfWeek = day.getValue() -1 ;
+//            System.out.println(day);
+//            System.out.println(dayOfWeek);
+            TimeTable doctorTimeTable = timeTableRepository.findByDoctorId(doctor_id).get(0);
+
+            String startTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(0);
+
+            String endTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(1);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+
+            Date startTimeFormat = formatter.parse(startTime);
+
+            Date endTimeFormat = formatter.parse(endTime);
+
+            //String formattedDateString = formatter.format(date);
+//            System.out.println(startTime);
+//            System.out.println(endTime);
+//            System.out.println(startTimeFormat.getTime());
+//            System.out.println(endTimeFormat.getTime());
+//            System.out.println(startTimeFormat);
+//            System.out.println(endTimeFormat);
+
+            long difference_In_Time = endTimeFormat.getTime() - startTimeFormat.getTime();
+
+            long difference_In_Minutes
+                    = (difference_In_Time
+                    / (1000 * 60));
+
+            //System.out.println(difference_In_Minutes);
+
+            long numberOfSlots = difference_In_Minutes/60;
+
+            if(difference_In_Minutes % 60!=0)
+            {
+                numberOfSlots++;
+            }
+
+            List<List<String>> timeSlots = new ArrayList<List<String>>();
+
+            Calendar cal = Calendar.getInstance(); // creates calendar
+
+            for(Integer i =0;i<numberOfSlots;i++)
+            {
+                cal.setTime(startTimeFormat);
+                cal.add(Calendar.HOUR_OF_DAY, 1);
+                Date slotStartTime = startTimeFormat;
+                Date slotEndTime;
+                System.out.println(cal.getTime());
+                if(endTimeFormat.compareTo(cal.getTime())<0)
+                {
+                    slotEndTime = endTimeFormat;
+                    System.out.println(slotEndTime);
+                }
+                else
+                {
+                    slotEndTime = cal.getTime();
+                }
+                startTimeFormat = slotEndTime;
+                List<String> tmp = new ArrayList<String>();
+                tmp.add(slotStartTime.getHours()+ ":" + slotStartTime.getMinutes());
+                tmp.add(slotEndTime.getHours()+ ":" + slotEndTime.getMinutes());
+                timeSlots.add(tmp);
+            }
+
+            return new ResponseEntity(new Response(true,timeSlots,"Schedule Added Successfully"), HttpStatus.OK);
 
         }
         catch (Exception e)
