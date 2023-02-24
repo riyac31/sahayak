@@ -35,8 +35,6 @@ public class Appointment {
     @JsonProperty( "appointment_date")
     private Date appointment_date;
 
-<<<<<<< HEAD
-
 
     @Field(value = "appointment_start_time")
     @JsonProperty( "appointment_start_time")
@@ -46,17 +44,6 @@ public class Appointment {
     @Field(value = "appointment_end_time")
     @JsonProperty( "appointment_end_time")
     private String appointmentEndTime;
-=======
-    @Field(value = "appointmentTime")
-    @JsonProperty( "appointmentTime")
-    private String appointmentTime;
-    @Field(value = "starttTime")
-    @JsonProperty( "startTime")
-    private String startTime;
-    @Field(value = "endTime")
-    @JsonProperty( "endTime")
-    private String endTime;
->>>>>>> 81e36093c3f459e6b5973d4587e5bdd33ba389ce
 
 
     @Field(value = "doctor")
@@ -96,7 +83,6 @@ public class Appointment {
         this.appointment_date = appointment_date;
     }
 
-<<<<<<< HEAD
     public String getAppointmentStartTime() {
         return appointmentStartTime;
     }
@@ -111,32 +97,6 @@ public class Appointment {
 
     public void setAppointmentEndTime(String appointmentEndTime) {
         this.appointmentEndTime = appointmentEndTime;
-=======
-    public String getAppointmentTime() {
-        return appointmentTime;
-    }
-
-    public void setAppointmentTime(String appointmentTime) {
-        this.appointmentTime = appointmentTime;
->>>>>>> 81e36093c3f459e6b5973d4587e5bdd33ba389ce
-    }
-
-    public String getStart_time() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-
-
-    public void setEndTime(String endtime) {
-        this.endTime = endTime;
-    }
-
-    public String getEnd_time() {
-        return startTime;
     }
     public Doctor getDoctor() {
         return doctor;
@@ -145,4 +105,5 @@ public class Appointment {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
+
 }
