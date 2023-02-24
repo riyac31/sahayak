@@ -9,7 +9,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
+import org.springframework.stereotype.Repository;
+@Repository
 @Document(value = "doctor")
 public class Doctor {
 
@@ -51,6 +52,9 @@ public class Doctor {
     @JsonProperty("hospital_id")
     @BsonRepresentation(BsonType.OBJECT_ID)
     private ObjectId hospital_id;
+    @Field(value = "consultation_time")
+    @JsonProperty("consultation_time")
+    private int consultationTime;
 
     public String getId() {
         return id;
@@ -115,4 +119,15 @@ public class Doctor {
     public void setHospital_id(ObjectId hospital_id) {
         this.hospital_id = hospital_id;
     }
+
+
+    public int getConsultationTime() {
+        return consultationTime;
+    }
+
+    public void setConsultationTime(int consultationTime) {
+        this.consultationTime = consultationTime;
+    }
+
+
 }

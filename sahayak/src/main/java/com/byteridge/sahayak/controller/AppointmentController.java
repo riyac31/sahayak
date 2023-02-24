@@ -6,7 +6,6 @@ import com.byteridge.sahayak.repository.AppointmentRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +39,12 @@ public class AppointmentController extends ValidationException {
     }
 
     @GetMapping("/hospitalAppointment/{hospital_id}")
-    ResponseEntity<Response> hospitalAppointment(@PathVariable(value = "hospital_id") ObjectId hospitalId)
+    ResponseEntity<Response> hospitalAppointment(@PathVariable(value = "hospital_id") String hospitalId)
     {
         try
         {
             System.out.println(hospitalId.toString());
-            List<Appointment> appointmentList =  appointmentRepository.getByHospitalId(hospitalId);
+            List<Appointment> appointmentList =  appointmentRepository.findByHospitalIdOrderByAppointmentTime(hospitalId);
             log.info("Appointment Fetched Successfully");
             return new ResponseEntity(new Response(true,appointmentList,"Appointment Saved Successfully"), HttpStatus.OK);
         }
@@ -56,7 +55,7 @@ public class AppointmentController extends ValidationException {
         }
     }
 
-    @GetMapping("/hospitalAppointment/{time}")
+    @GetMapping("/hospitalAppointmentByTime/{time}")
     ResponseEntity<Response> hospitalAppointmentbyTime(@PathVariable(value = "time") String time)
     {
         try
@@ -72,4 +71,5 @@ public class AppointmentController extends ValidationException {
 
         }
     }
+
 }

@@ -13,19 +13,18 @@ public class BCryptPasswordEncoder {
 //
 //    }
 
-    private static final int STRENGTH = 12;
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    private static final int STRENGTH = 12;
+//    private static final BC
+//
+//
+//
+//    public String encode(String password) {
+//        return encoder.encode(password);
+//
+//    }
 
-    public BCryptPasswordEncoder() {
-    }
 
-    public String encode(String password) {
-        return encoder.encode(password);
-
-    }
-
-
-    public boolean matches(String password, String hashedPassword) {
-        return BCryptPasswordEncoder.encoder.matches(password,hashedPassword);
-    }
+//    public boolean matches(String password, String hashedPassword) {
+//        return BCryptPasswordEncoder.encoder.matches(password,hashedPassword);
+//    }
 }

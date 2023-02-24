@@ -1,7 +1,6 @@
 package com.byteridge.sahayak.Service;
 
 import com.byteridge.sahayak.model.Patient;
-import com.byteridge.sahayak.model.PatientReg;
 import com.byteridge.sahayak.model.PatientRegRequest;
 import com.byteridge.sahayak.repository.PatientRegRepository;
 import com.byteridge.sahayak.repository.PatientRepository;
@@ -19,21 +18,13 @@ public class PatientService {
     @Autowired
     PatientRegRepository patientRegRepository;
 
-    public List<Patient> addPatients(List<Patient> patients){
-        return patientRepository.saveAll(patients);
-    }
-
-    public List<Patient> findAll(){
-        return patientRepository.findAll();
-    }
-
 
     public String addPatient(PatientRegRequest request) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            PatientReg patientReg = patientRegRepository.findByEmail(request.getEmail());
-            if (Objects.isNull(patientReg)) {
-                PatientReg reg = objectMapper.convertValue(request, PatientReg.class);
+            Patient patient = patientRegRepository.findByEmail(request.getEmail());
+            if (Objects.isNull(patient)) {
+                Patient reg = objectMapper.convertValue(request, Patient.class);
                 patientRegRepository.save(reg);
                 return "patients data saved successfully";
             } else {
@@ -46,5 +37,10 @@ public class PatientService {
         }
 
     }
+
+    public List<Patient> getPatientsByDoctorId(String id) {
+        return patientRepository.findByDoctorId(id);
+    }
+
 }
 

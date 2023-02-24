@@ -1,142 +1,63 @@
 package com.byteridge.sahayak.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection="patientData")
+@Document(collection="patient")
 @Builder
-public class Patient implements List<Patient> {
-    String idProof;
-    String user_id;
+public class Patient {
 
-    String disease;
-    String phoneNo;
 
-    String password;
+        @Id
+        private String id;
 
-    @Override
-    public int size() {
-        return 0;
-    }
+        @JsonProperty("first_name")
+        @Field(value = "first_name")
+        private String first_name;
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 
-    @Override
-    public boolean contains(Object o) {
-        return false;
-    }
+        @JsonProperty("last_name")
+        @Field(value = "last_name")
+        private String last_name;
 
-    @Override
-    public Iterator<Patient> iterator() {
-        return null;
-    }
+        @JsonProperty("patient_name")
+        @Field(value = "patient_name")
+        private String patient_name;
 
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
+        @JsonProperty("disease")
+        @Field(value = "disease")
+        private String disease;
 
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
+        @JsonProperty("age")
+        @Field(value = "age")
+        private String age;
 
-    @Override
-    public boolean add(Patient patient) {
-        return false;
-    }
 
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
+        @NonNull
+        @JsonProperty("email")
+        @Field(value = "email")
+        private String email;
 
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
+        @NonNull
+        @JsonProperty("phone_no")
+        @Field(value = "phone_no")
+        private String phone_no;
 
-    @Override
-    public boolean addAll(Collection<? extends Patient> c) {
-        return false;
-    }
+        @NonNull
+        @JsonProperty("password")
+        @Field(value = "password")
+        private String password;
+//        public void setEncryptedPassword(String password) {
+                // Hash the password using bcrypt
+//                this.password = new BCryptPasswordEncoder().encode(password);
+//        }
+        private String doctorId;
 
-    @Override
-    public boolean addAll(int index, Collection<? extends Patient> c) {
-        return false;
-    }
 
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public Patient get(int index) {
-        return null;
-    }
-
-    @Override
-    public Patient set(int index, Patient element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, Patient element) {
-
-    }
-
-    @Override
-    public Patient remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<Patient> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<Patient> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<Patient> subList(int fromIndex, int toIndex) {
-        return null;
-    }
 }

@@ -11,11 +11,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
+import java.util.*;
 
 @Document(value = "appointment")
 public class Appointment {
 
+    private final ArrayList<Object> patients;
     @BsonId
     @Id
     @BsonProperty("id")
@@ -114,5 +115,18 @@ public class Appointment {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
+    }
+    public Appointment() {
+        this.patients = new ArrayList<>();
+    }
+    public void assignPatient(Patient patient) {
+        this.patients.add(patient);
+    }
+    public int getConsultationTime() {
+        int totalConsultationTime = doctor.getConsultationTime();
+
+        int totalAssignedPatients = patients != null ? patients.size() : 0;
+        int averageConsultationTime = totalAssignedPatients > 0 ? totalConsultationTime / totalAssignedPatients : 0;
+        return averageConsultationTime;
     }
 }
