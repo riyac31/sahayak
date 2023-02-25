@@ -5,14 +5,17 @@ import com.byteridge.sahayak.Service.WaitTimeService;
 import com.byteridge.sahayak.model.Patient;
 import com.byteridge.sahayak.model.PatientRegRequest;
 import com.byteridge.sahayak.repository.PatientRepository;
+import com.byteridge.sahayak.request.PatientLogInRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/patient")
@@ -45,9 +48,13 @@ public class PatientController {
         return addedPatients;
     }
     @PostMapping("/addPatient")
-    public Patient addPatient(@RequestBody PatientRegRequest patient) {
+    public ResponseEntity addPatient(@RequestBody PatientRegRequest patient) {
 //        bCryptPasswordEncoder.encode(patient.getPassword());
-         return patientRepository.save(new ObjectMapper().convertValue(patient, Patient.class));
+        Patient patient1 = patientRepository.findByPhoneNo(patient.getPhoneNo());
+        if(Objects.nonNull(patient1))
+            return new ResponseEntity<>("Patient already registered", HttpStatus.BAD_REQUEST);
+        patientRepository.save(new ObjectMapper().convertValue(patient, Patient.class));
+        return new ResponseEntity<>("Patient registered", HttpStatus.OK);
 
     }
 
@@ -66,4 +73,15 @@ public class PatientController {
         }
 
 
-    }}
+    }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody PatientLogInRequest login) {
+        if (patientService.authenticatePatient(login)) {
+            return new ResponseEntity<>("Log in successful",HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid password or phone number",HttpStatus.UNAUTHORIZED);
+        }
+    }
+}

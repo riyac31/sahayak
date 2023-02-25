@@ -23,7 +23,7 @@ public class WaitTimeService {
     public int calculateWaitTime(String doctorId) {
         // Get all appointments for the specified doctor that are scheduled in the future
         List<Appointment> futureAppointments = appointmentRepository
-                .findByDoctorIdAndStartTimeAfter(doctorId, LocalDateTime.now());
+                .findByDoctorIdAndAppointmentStartTimeAfter(doctorId, LocalDateTime.now());
 
         // Calculate the total consultation time for all future appointments
         int totalConsultationTime = futureAppointments.stream()

@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends MongoRepository<Patient,String> {
     public Patient findByEmail(String email);
+    public Patient findByPhoneNo(String phone_no);
+
 
 
     List<Patient> findByDoctorId(String DoctorId);

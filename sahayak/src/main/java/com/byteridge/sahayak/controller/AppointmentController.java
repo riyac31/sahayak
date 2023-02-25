@@ -4,7 +4,6 @@ import com.byteridge.sahayak.model.Appointment;
 import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.repository.AppointmentRepository;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/appointments")
 @Slf4j
-public class AppointmentController extends ValidationException {
+public class AppointmentController{
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -44,7 +43,7 @@ public class AppointmentController extends ValidationException {
         try
         {
             System.out.println(hospitalId.toString());
-            List<Appointment> appointmentList =  appointmentRepository.findByHospitalIdOrderByAppointmentTime(hospitalId);
+            List<Appointment> appointmentList =  appointmentRepository.findByHospitalIdOrderByAppointmentStartTime(hospitalId);
             log.info("Appointment Fetched Successfully");
             return new ResponseEntity(new Response(true,appointmentList,"Appointment Saved Successfully"), HttpStatus.OK);
         }
@@ -61,7 +60,7 @@ public class AppointmentController extends ValidationException {
         try
         {
             System.out.println(time.toString());
-            List<Appointment> appointmentList =  appointmentRepository.findAllByAppointmentTime(time);
+            List<Appointment> appointmentList =  appointmentRepository.findAllByAppointmentStartTime(time);
             log.info("Appointment Fetched Successfully");
             return new ResponseEntity(new Response(true,appointmentList,"Appointment Fetched Successfully"), HttpStatus.OK);
         }

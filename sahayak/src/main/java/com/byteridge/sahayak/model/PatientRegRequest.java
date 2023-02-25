@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PatientRegRequest {
 
-    private String first_name;
-    private String last_name;
-    private String patient_name;
+    private String firstName;
+    private String lastName;
+    private String patientName;
     private String disease;
     private String age;
     private String email;
 
-    private String phone_no;
+    private String phoneNo;
     private String password;
     private String doctorId;
 
