@@ -26,9 +26,9 @@ public class WaitTimeService {
                 .findByDoctorIdAndAppointmentStartTimeAfter(doctorId, LocalDateTime.now());
 
         // Calculate the total consultation time for all future appointments
-        int totalConsultationTime = futureAppointments.stream()
-                .mapToInt(Appointment::getConsultationTime)
-                .sum();
+//        int totalConsultationTime = futureAppointments.stream()
+//                .mapToInt(Appointment::getConsultationTime)
+//                .sum();
 
 //        // Calculate the wait time based on the average consultation time and total consultation time
 //        int waitTime = Math.max(0, totalConsultationTime - averageConsultationTime * futureAppointments.size());
@@ -39,7 +39,7 @@ public class WaitTimeService {
 //        waitTimeEntity.setWaitTime(waitTime);
 //        waitTimeRepository.save(waitTimeEntity);
 
-        return totalConsultationTime;
+        return 1;
 
     }
 }
