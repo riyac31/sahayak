@@ -23,6 +23,11 @@ public class Appointment {
     private ObjectId id;
 
     @BsonRepresentation(BsonType.OBJECT_ID)
+    @Field(value = "patient_id")
+    @JsonProperty("patient_id")
+    private ObjectId patientId;
+
+    @BsonRepresentation(BsonType.OBJECT_ID)
     @Field(value = "hospital_id")
     @JsonProperty("hospital_id")
     private ObjectId hospitalId;
@@ -36,15 +41,15 @@ public class Appointment {
     @JsonProperty( "appointment_date")
     private Date appointment_date;
 
-    @Field(value = "appointmentTime")
-    @JsonProperty( "appointmentTime")
-    private String appointmentTime;
-    @Field(value = "starttTime")
-    @JsonProperty( "startTime")
-    private String startTime;
-    @Field(value = "endTime")
-    @JsonProperty( "endTime")
-    private String endTime;
+
+    @Field(value = "appointment_start_time")
+    @JsonProperty( "appointment_start_time")
+    private String appointmentStartTime;
+
+
+    @Field(value = "appointment_end_time")
+    @JsonProperty( "appointment_end_time")
+    private String appointmentEndTime;
 
 
     @Field(value = "doctor")
@@ -84,30 +89,20 @@ public class Appointment {
         this.appointment_date = appointment_date;
     }
 
-    public String getAppointmentTime() {
-        return appointmentTime;
+    public String getAppointmentStartTime() {
+        return appointmentStartTime;
     }
 
-    public void setAppointmentTime(String appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setAppointmentStartTime(String appointmentStartTime) {
+        this.appointmentStartTime = appointmentStartTime;
     }
 
-    public String getStart_time() {
-        return startTime;
+    public String getAppointmentEndTime() {
+        return appointmentEndTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-
-
-    public void setEndTime(String endtime) {
-        this.endTime = endTime;
-    }
-
-    public String getEnd_time() {
-        return startTime;
+    public void setAppointmentEndTime(String appointmentEndTime) {
+        this.appointmentEndTime = appointmentEndTime;
     }
     public Doctor getDoctor() {
         return doctor;
@@ -128,5 +123,13 @@ public class Appointment {
         int totalAssignedPatients = patients != null ? patients.size() : 0;
         int averageConsultationTime = totalAssignedPatients > 0 ? totalConsultationTime / totalAssignedPatients : 0;
         return averageConsultationTime;
+    }
+
+    public ObjectId getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(ObjectId patientId) {
+        this.patientId = patientId;
     }
 }
