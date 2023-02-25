@@ -55,7 +55,8 @@ public class Patient {
                 // Hash the password using bcrypt
 //                this.password = new BCryptPasswordEncoder().encode(password);
 //        }
-        private String doctorId;
+        private String cityId;
+        private String stateId;
 
 
 }

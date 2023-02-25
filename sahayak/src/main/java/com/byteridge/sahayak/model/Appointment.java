@@ -22,7 +22,7 @@ public class Appointment {
     private String patientId;
     private String hospitalId;
     private String doctorId;
-    private Date appointment_date;
+    private Date appointmentDate = new Date();
 
     private String appointmentStartTime;
 

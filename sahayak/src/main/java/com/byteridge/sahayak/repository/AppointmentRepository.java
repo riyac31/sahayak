@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 @Repository
 
@@ -16,8 +17,13 @@ public interface AppointmentRepository extends MongoRepository<Appointment, Obje
     List<Appointment> getByHospitalId(ObjectId hospital_id);
 
     List<Appointment> findByDoctorIdAndAppointmentStartTimeAfter(String doctorId, LocalDateTime now);
+    List<Appointment> findByDoctorIdAndAppointmentDateAfter(String doctorId, Date now);
 
     List<Appointment> findAllByAppointmentStartTime(String time);
     List<Appointment> findByHospitalIdOrderByAppointmentStartTime(String hospitalId);
+     List <Appointment> findByPatientIdAndAppointmentDateBefore(String patientId, Date Now);
+     List <Appointment> findByPatientIdAndAppointmentDateAfter(String patientId, Date Now);
+     Appointment findByPatientId(String patientId);
+
 
 }

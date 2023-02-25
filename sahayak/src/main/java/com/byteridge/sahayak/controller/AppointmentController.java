@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -67,6 +68,18 @@ public class AppointmentController{
         }
         catch (Exception e)
         {
+            return new ResponseEntity(new Response(true,e.getMessage(),"Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+    @GetMapping("/past/patient/{patientId}")
+    ResponseEntity<Response> appointmentByPatientId(@PathVariable(value="patientId")String patientId){
+        try {
+            List<Appointment> appointments = appointmentRepository.findByPatientIdAndAppointmentDateBefore(patientId, new Date());
+
+            return new ResponseEntity(new Response(true, appointments, "Appointments"), HttpStatus.OK);
+        }
+        catch (Exception e){
             return new ResponseEntity(new Response(true,e.getMessage(),"Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }

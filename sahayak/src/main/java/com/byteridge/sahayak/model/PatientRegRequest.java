@@ -20,7 +20,8 @@ public class PatientRegRequest {
 
     private String phoneNo;
     private String password;
-    private String doctorId;
+    private String cityId;
+    private String stateId;
 
 
 }
