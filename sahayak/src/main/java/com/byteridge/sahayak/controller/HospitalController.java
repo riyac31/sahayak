@@ -8,6 +8,7 @@ import com.byteridge.sahayak.model.Hospital;
 import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.repository.HospitalRepository;
 import jakarta.validation.Valid;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/api/hospital")
 public class HospitalController  extends ValidationException {
 
     @Autowired
@@ -66,13 +69,12 @@ public class HospitalController  extends ValidationException {
     }
 
     @GetMapping("/cityHospital")
-    ResponseEntity<Response> getHospitalByCityName(@RequestParam(value = "city_name") String cityName,@RequestParam(value = "state_name") String stateName)
+    ResponseEntity<Response> getHospitalByCityName(@RequestParam(value = "city_id") ObjectId cityId)
     {
           try
           {
-              System.out.println(cityName);
-              System.out.println(stateName);
-              List<Hospital> hospitalList = hospitalRepository.findByCityAndStateName(cityName.toLowerCase(),stateName.toLowerCase());
+
+              List<Hospital> hospitalList = hospitalRepository.findByCityId(cityId);
               return new ResponseEntity(new Response(true,hospitalList,"Hospital Fetched Successfully"),HttpStatus.OK);
           }
           catch (Exception e)

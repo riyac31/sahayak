@@ -60,9 +60,6 @@ public class Doctor {
     @JsonProperty("hospital_id")
     @BsonRepresentation(BsonType.OBJECT_ID)
     private ObjectId hospital_id;
-    @Field(value = "consultation_time")
-    @JsonProperty("consultation_time")
-    private int consultationTime;
 
     public String getId() {
         return id;
@@ -144,14 +141,6 @@ public class Doctor {
         this.price = price;
     }
 
-
-    public int getConsultationTime() {
-        return consultationTime;
-    }
-
-    public void setConsultationTime(int consultationTime) {
-        this.consultationTime = consultationTime;
-    }
 
 
 }

@@ -96,6 +96,11 @@ public class TimeTableController {
 
             Integer averageConsultationTime = doctor.getAverageConsultationTime();
 
+            if(doctorTimeTable.getWeek_schedule().get(dayOfWeek).isEmpty())
+            {
+                return new ResponseEntity(new Response(true, null,"Doctor Not Available on this Date"),HttpStatus.CONFLICT);
+            }
+
             String startTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(0);
 
             String endTime = doctorTimeTable.getWeek_schedule().get(dayOfWeek).get(1);
@@ -129,7 +134,7 @@ public class TimeTableController {
                 numberOfSlots++;
             }
 
-            List<List<String>> timeSlots = new ArrayList<List<String>>();
+            List<Map<String,String>> timeSlots = new ArrayList<Map<String,String>>();
 
             Calendar cal = Calendar.getInstance(); // creates calendar
 
@@ -151,21 +156,21 @@ public class TimeTableController {
                     slotEndTime = cal.getTime();
                 }
                 startTimeFormat = slotEndTime;
-                List<String> tmp = new ArrayList<String>();
                 long difference_In_Slot_Time = slotEndTime.getTime() - slotStartTime.getTime();
 
+                Map<String,String> tmp = new HashMap<>() ;
                 long difference_In_Slot_Time_Minutes
                         = (difference_In_Slot_Time
                         / (1000 * 60));
                 System.out.println(difference_In_Slot_Time_Minutes);
                 long numberOfAppointmentsAllowed = difference_In_Slot_Time_Minutes/averageConsultationTime + 1;
-                tmp.add(slotStartTime.getHours()+ ":" + slotStartTime.getMinutes());
-                tmp.add(slotEndTime.getHours()+ ":" + slotEndTime.getMinutes());
-                tmp.add(String.valueOf(numberOfAppointmentsAllowed));
+                tmp.put("slot_start",slotStartTime.getHours()+ ":" + slotStartTime.getMinutes());
+                tmp.put("slot_end",slotEndTime.getHours()+ ":" + slotEndTime.getMinutes());
+                tmp.put("maximum_appointment",String.valueOf(numberOfAppointmentsAllowed));
                 timeSlots.add(tmp);
             }
 
-            return new ResponseEntity(new Response(true, timeSlots,"Schedule Added Successfully"), HttpStatus.OK);
+            return new ResponseEntity(new Response(true, timeSlots,"Time Slots Fetched Successfully"), HttpStatus.OK);
 
         }
         catch (Exception e)

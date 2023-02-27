@@ -47,6 +47,11 @@ public class Hospital {
     @Field(value = "image_id",targetType = FieldType.OBJECT_ID)
     private String image_id;
 
+    @JsonProperty("city_id")
+    @Field("city_id")
+    ObjectId cityId;
+
+
     @Valid
     @JsonProperty("address")
     @Field(value = "address")
@@ -106,5 +111,13 @@ public class Hospital {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getCityId() {
+        return cityId.toString();
+    }
+
+    public void setCityId(ObjectId cityId) {
+        this.cityId = cityId;
     }
 }

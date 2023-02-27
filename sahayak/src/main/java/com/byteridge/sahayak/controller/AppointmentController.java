@@ -24,11 +24,11 @@ public class AppointmentController{
 
 
     @PostMapping("/appointment")
-    ResponseEntity<Response> addAppointment(@RequestBody AppointmentRequest appointmentRequest)
+    ResponseEntity<Response> addAppointment(@RequestBody Appointment appointmentRequest)
     {
         try
         {
-            appointmentRepository.save(new ObjectMapper().convertValue(appointmentRequest, Appointment.class));
+            appointmentRepository.save(appointmentRequest);
             log.info("Appointment saved Successfully ");
             return new ResponseEntity(new Response(true,"Appointment Saved Successfully","Appointment Saved Successfully"), HttpStatus.OK);
         }
