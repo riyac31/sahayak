@@ -4,9 +4,13 @@ import com.byteridge.sahayak.model.Appointment;
 import com.byteridge.sahayak.repository.AppointmentRepository;
 import com.byteridge.sahayak.repository.WaitTimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +21,9 @@ public class WaitTimeService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
 
 
@@ -40,6 +47,21 @@ public class WaitTimeService {
 //        waitTimeRepository.save(waitTimeEntity);
 
         return 1;
+    }
+
+    public long alreadyBookedAppointment(String slotStartTimeString,String slotEndTimeString,String date,String doctor_id)
+    {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("createdAt").lt(new Date()));
+        query.addCriteria(Criteria.where("appointmentStartTime").is(slotStartTimeString));
+        query.addCriteria(Criteria.where("appointmentEndTime").is(slotEndTimeString));
+        query.addCriteria(Criteria.where("appointmentDate").is(date));
+        query.addCriteria(Criteria.where("doctorId").is(doctor_id));
+
+        long numberOfAlreadyBookedAppointments = mongoTemplate.find(query, Appointment.class).size();
+
+        return numberOfAlreadyBookedAppointments;
 
     }
+
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 @Data
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class Appointment {
     @JsonProperty("doctor_id")
     private String doctorId;
     @JsonProperty("appointment_date")
-    private Date appointmentDate = new Date();
+    private String appointmentDate ;
 
     @JsonProperty("appointment_start_time")
     private String appointmentStartTime;
@@ -40,6 +41,11 @@ public class Appointment {
 
     @JsonProperty("doctor")
     private Doctor doctor;
+
+    @JsonProperty("patient")
+    private Patient patient;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public String getId() {
         return id;
@@ -73,12 +79,20 @@ public class Appointment {
         this.doctorId = doctorId;
     }
 
-    public Date getAppointmentDate() {
+    public String getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(Date appointmentDate) {
+    public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public String getAppointmentStartTime() {
@@ -104,6 +118,15 @@ public class Appointment {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
 
     //    public int getConsultationTime() {
 //        int totalConsultationTime = doctor.getConsultationTime();

@@ -63,7 +63,7 @@ public class PatientService {
             String doctorId = appointment.getDoctorId();
             Doctor doctor = doctorsRepository.findById(doctorId).get();
             int averageConsultationTime = doctor.getAverageConsultationTime();
-            List<Appointment> appointments = appointmentRepository.findByPatientIdAndAppointmentDateAfter(patientId, appointment.getAppointmentDate());
+            List<Appointment> appointments = appointmentRepository.findByPatientIdAndCreatedAtAfter(patientId, appointment.getCreatedAt());
             log.info("{}", appointments);
             return appointments.size() * averageConsultationTime;
         }

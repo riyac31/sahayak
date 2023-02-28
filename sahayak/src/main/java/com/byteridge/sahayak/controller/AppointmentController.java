@@ -75,7 +75,7 @@ public class AppointmentController{
     @GetMapping("/past/patient/{patientId}")
     ResponseEntity<Response> appointmentByPatientId(@PathVariable(value="patientId")String patientId){
         try {
-            List<Appointment> appointments = appointmentRepository.findByPatientIdAndAppointmentDateBefore(patientId, new Date());
+            List<Appointment> appointments = appointmentRepository.findByPatientIdAndCreatedAtBefore(patientId, new Date());
 
             return new ResponseEntity(new Response(true, appointments, "Appointments"), HttpStatus.OK);
         }

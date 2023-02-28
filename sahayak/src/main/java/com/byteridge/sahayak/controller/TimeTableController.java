@@ -1,21 +1,30 @@
 package com.byteridge.sahayak.controller;
 
+import com.byteridge.sahayak.Service.WaitTimeService;
+import com.byteridge.sahayak.model.Appointment;
 import com.byteridge.sahayak.model.Doctor;
 import com.byteridge.sahayak.model.Response;
 import com.byteridge.sahayak.model.TimeTable;
+import com.byteridge.sahayak.repository.AppointmentRepository;
 import com.byteridge.sahayak.repository.DoctorsRepository;
 import com.byteridge.sahayak.repository.TimeTableRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -27,6 +36,12 @@ public class TimeTableController {
 
     @Autowired
     private DoctorsRepository doctorsRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    WaitTimeService waitTimeService;
 
     @PostMapping("/schedule")
     ResponseEntity<Response> addSchedule(@Valid @RequestBody TimeTable timeTable)
@@ -95,7 +110,6 @@ public class TimeTableController {
             Doctor doctor = doctorsRepository.findOneById(doctor_id);
 
             Integer averageConsultationTime = doctor.getAverageConsultationTime();
-
             if(doctorTimeTable.getWeek_schedule().get(dayOfWeek).isEmpty())
             {
                 return new ResponseEntity(new Response(true, null,"Doctor Not Available on this Date"),HttpStatus.CONFLICT);
@@ -163,10 +177,23 @@ public class TimeTableController {
                         = (difference_In_Slot_Time
                         / (1000 * 60));
                 System.out.println(difference_In_Slot_Time_Minutes);
+
                 long numberOfAppointmentsAllowed = difference_In_Slot_Time_Minutes/averageConsultationTime + 1;
-                tmp.put("slot_start",slotStartTime.getHours()+ ":" + slotStartTime.getMinutes());
-                tmp.put("slot_end",slotEndTime.getHours()+ ":" + slotEndTime.getMinutes());
-                tmp.put("maximum_appointment",String.valueOf(numberOfAppointmentsAllowed));
+
+                String slotStartTimeString = slotStartTime.getHours()+ ":" + slotStartTime.getMinutes();
+                String slotEndTimeString = slotEndTime.getHours()+ ":" + slotEndTime.getMinutes();
+                long numberOfAlreadyBookedAppointments = waitTimeService.alreadyBookedAppointment(slotStartTimeString,slotEndTimeString,date,doctor_id.toString());
+                System.out.println(slotStartTimeString);
+                System.out.println(slotEndTimeString);
+                System.out.println(date);
+                System.out.println(numberOfAlreadyBookedAppointments);
+                long remainingAppointment = numberOfAppointmentsAllowed - numberOfAlreadyBookedAppointments;
+                tmp.put("slot_start",slotStartTimeString);
+
+                tmp.put("slot_end",slotEndTimeString);
+
+                tmp.put("maximum_appointment",String.valueOf(remainingAppointment));
+
                 timeSlots.add(tmp);
             }
 
