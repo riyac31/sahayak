@@ -72,12 +72,12 @@ public class PatientController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Patient> login(@RequestBody PatientLogInRequest login) {
+    public ResponseEntity<?> login(@RequestBody PatientLogInRequest login) {
         Patient patient = patientService.authenticatePatient(login);
         if (Objects.nonNull(patient)) {
             return new ResponseEntity<>(patient,HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(patient,HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Incorrect Password or Phone Number",HttpStatus.UNAUTHORIZED);
         }
     }
     @GetMapping("/waitTime/{patientId}")
