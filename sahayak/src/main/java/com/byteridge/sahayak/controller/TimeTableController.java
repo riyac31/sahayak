@@ -188,11 +188,17 @@ public class TimeTableController {
                 System.out.println(date);
                 System.out.println(numberOfAlreadyBookedAppointments);
                 long remainingAppointment = numberOfAppointmentsAllowed - numberOfAlreadyBookedAppointments;
+                Calendar approximateTurnCalender = Calendar.getInstance();
+                approximateTurnCalender.setTime(slotStartTime);
+                approximateTurnCalender.add(Calendar.MINUTE , (int) (numberOfAlreadyBookedAppointments * averageConsultationTime));
+                String approximateTurnTime = approximateTurnCalender.getTime().getHours() + ":" + approximateTurnCalender.getTime().getMinutes();
                 tmp.put("slot_start",slotStartTimeString);
 
                 tmp.put("slot_end",slotEndTimeString);
 
-                tmp.put("maximum_appointment",String.valueOf(remainingAppointment));
+                tmp.put("maximum_appointment",String.valueOf(Math.max(remainingAppointment,0) ));
+
+                tmp.put("approximate_turn_time",approximateTurnTime);
 
                 timeSlots.add(tmp);
             }
