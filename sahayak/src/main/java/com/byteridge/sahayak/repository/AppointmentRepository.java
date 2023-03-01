@@ -24,9 +24,12 @@ public interface AppointmentRepository extends MongoRepository<Appointment, Obje
      List <Appointment> findByPatientIdAndCreatedAtBefore(String patientId, Date Now);
      List <Appointment> findByPatientIdAndCreatedAtAfter(String patientId, LocalDateTime Now);
 
-    @Query("{'createdAt' : {$lt : new Date()},'appointmentStartTime':{$eq:?0},'appointmentEndTime':{$eq:?1},'appointmentDate':{$eq:Date(?2)},'doctorId':?3}")
-    List <Appointment> findBookedAppointment(String appointmentStart,String appointmentEnd,String appointmentDate,String doctorId);
-     Appointment findByPatientId(String patientId);
+
+     List<Appointment> findByPatientIdAndDateOfAppointmentBeforeOrderByDateOfAppointment(String patientId,LocalDateTime date);
+
+     List<Appointment> findByPatientIdAndDateOfAppointmentAfterOrderByDateOfAppointment(String patientId,LocalDateTime date);
+
+    Appointment findByPatientId(String patientId);
 
 
 }

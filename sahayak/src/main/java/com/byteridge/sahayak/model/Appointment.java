@@ -19,6 +19,15 @@ import java.util.Date;
 @Document(value = "appointment")
 public class Appointment {
 
+    public Appointment(String id, String appointmentDate, String appointmentStartTime, String appointmentEndTime, String approximateTurnTime) {
+        this.id = id;
+        this.appointmentDate = appointmentDate;
+        this.appointmentStartTime = appointmentStartTime;
+        this.appointmentEndTime = appointmentEndTime;
+        this.doctor = doctor;
+        this.approximateTurnTime = approximateTurnTime;
+    }
+
     @Id
     private String id;
 
@@ -45,6 +54,11 @@ public class Appointment {
     @JsonProperty("patient")
     private Patient patient;
 
+    @JsonProperty("approximate_turn_time")
+    private String approximateTurnTime;
+
+    @JsonProperty("date_of_appointment")
+    private Date dateOfAppointment;
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public String getId() {
@@ -127,6 +141,21 @@ public class Appointment {
         this.createdAt = createdAt;
     }
 
+    public String getApproximateTurnTime() {
+        return approximateTurnTime;
+    }
+
+    public void setApproximateTurnTime(String approximateTurnTime) {
+        this.approximateTurnTime = approximateTurnTime;
+    }
+
+    public Date getDateOfAppointment() {
+        return dateOfAppointment;
+    }
+
+    public void setDateOfAppointment(Date dateOfAppointment) {
+        this.dateOfAppointment = dateOfAppointment;
+    }
 
     //    public int getConsultationTime() {
 //        int totalConsultationTime = doctor.getConsultationTime();

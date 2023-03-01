@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface HospitalRepository extends MongoRepository<Hospital,String> {
 
-
+    Hospital findOneById(String id);
     List<Hospital> findByEmail(String email);
 
     @Query("{'city_id' : ?0}")
