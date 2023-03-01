@@ -25,9 +25,9 @@ public interface AppointmentRepository extends MongoRepository<Appointment, Obje
      List <Appointment> findByPatientIdAndCreatedAtAfter(String patientId, LocalDateTime Now);
 
 
-     List<Appointment> findByPatientIdAndDateOfAppointmentBeforeOrderByDateOfAppointment(String patientId,LocalDateTime date);
+     List<Appointment> findByPatientIdAndDateOfAppointmentBeforeOrderByDateOfAppointmentDesc(String patientId,LocalDateTime date);
 
-     List<Appointment> findByPatientIdAndDateOfAppointmentAfterOrderByDateOfAppointment(String patientId,LocalDateTime date);
+     List<Appointment> findByPatientIdAndDateOfAppointmentAfterOrderByDateOfAppointmentAsc(String patientId,LocalDateTime date);
 
     Appointment findByPatientId(String patientId);
 

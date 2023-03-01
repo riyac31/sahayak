@@ -135,12 +135,12 @@ public class AppointmentController{
         try
         {
             System.out.println(patientId.toString());
-            List<Appointment> data =  appointmentRepository.findByPatientIdAndDateOfAppointmentBeforeOrderByDateOfAppointment(patientId, LocalDateTime.now());
+            List<Appointment> data =  appointmentRepository.findByPatientIdAndDateOfAppointmentBeforeOrderByDateOfAppointmentDesc(patientId, LocalDateTime.now());
             int appointmentSize = data.size();
             List<Map<String,String>> appointmentList = new ArrayList<Map<String,String>>();
             if(data.isEmpty() == true)
             {
-                return  new ResponseEntity(new Response(true,null,"No Past Appointment"), HttpStatus.OK);
+                return  new ResponseEntity(new Response(true,appointmentList,"No Past Appointment"), HttpStatus.OK);
             }
             for(int i=0;i<appointmentSize;i++)
             {
@@ -176,12 +176,12 @@ public class AppointmentController{
         try
         {
             System.out.println(patientId.toString());
-            List<Appointment> data =  appointmentRepository.findByPatientIdAndDateOfAppointmentAfterOrderByDateOfAppointment(patientId, LocalDateTime.now());
+            List<Appointment> data =  appointmentRepository.findByPatientIdAndDateOfAppointmentAfterOrderByDateOfAppointmentAsc(patientId, LocalDateTime.now());
             int appointmentSize = data.size();
             List<Map<String,String>> appointmentList = new ArrayList<Map<String,String>>();
             if(data.isEmpty() == true)
             {
-                return  new ResponseEntity(new Response(true,null,"No Past Appointment"), HttpStatus.OK);
+                return  new ResponseEntity(new Response(true,appointmentList,"No Past Appointment"), HttpStatus.OK);
             }
             for(int i=0;i<appointmentSize;i++)
             {

@@ -73,6 +73,7 @@ public class WaitTimeService {
     {
         Query query = new Query();
         query.addCriteria(Criteria.where("patientId").is(patient_id));
+        query.addCriteria(Criteria.where("dateOfAppointment").gte(LocalDateTime.now()));
         query.with(Sort.by(Sort.Direction.ASC,"appointmentDate","approximateTurnTime"));
         query.limit(1);
         Appointment upcomingAppointment = mongoTemplate.find(query, Appointment.class).get(0);
