@@ -3,13 +3,19 @@ package com.byteridge.sahayak.Service;
 import com.byteridge.sahayak.model.Appointment;
 import com.byteridge.sahayak.repository.AppointmentRepository;
 import com.byteridge.sahayak.repository.WaitTimeRepository;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.AddFieldsOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +67,19 @@ public class WaitTimeService {
         long numberOfAlreadyBookedAppointments = mongoTemplate.find(query, Appointment.class).size();
 
         return numberOfAlreadyBookedAppointments;
+
+    }
+    public Appointment upcomingAppointment(String patient_id)
+    {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("patientId").is(patient_id));
+        query.addCriteria(Criteria.where("dateOfAppointment").gte(LocalDateTime.now()));
+        query.with(Sort.by(Sort.Direction.ASC,"appointmentDate","approximateTurnTime"));
+        query.limit(1);
+        Appointment upcomingAppointment = mongoTemplate.find(query, Appointment.class).get(0);
+        System.out.println(upcomingAppointment.getHospitalId());
+        return upcomingAppointment;
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.byteridge.sahayak.repository;
 
 import com.byteridge.sahayak.model.Patient;
+import com.byteridge.sahayak.model.PatientRegRequest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

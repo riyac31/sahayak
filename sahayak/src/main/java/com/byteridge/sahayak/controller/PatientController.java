@@ -20,52 +20,28 @@ public class PatientController {
     @Autowired
     PatientRepository patientRepository;
 
-//    @Autowired
-//    BCryptPasswordEncoder bCryptPasswordEncoder;
-    @GetMapping("/getAll")
-    public List<Patient> getAll(){
-        try{
-            return patientRepository.findAll();
-        }
-        catch (Exception e){
-            return Collections.EMPTY_LIST;
 
-        }
-
-    }
-    @PostMapping("/addPatients")
-    public List<Patient> addPatients(@RequestBody List<PatientRegRequest> patients) {
-        List<Patient> addedPatients = new ArrayList<>();
-        for (PatientRegRequest patient : patients) {
-//            bCryptPasswordEncoder.encode(patient.getPassword());
-            addedPatients.add(patientRepository.save(new ObjectMapper().convertValue(patient, Patient.class)));
-        }
-        return addedPatients;
-    }
     @PostMapping("/addPatient")
-    public ResponseEntity addPatient(@RequestBody PatientRegRequest patient) {
+    public ResponseEntity addPatient(@RequestBody Patient patient) {
 //        bCryptPasswordEncoder.encode(patient.getPassword());
-        Patient patient1 = patientRepository.findByPhoneNo(patient.getPhoneNo());
-        if(Objects.nonNull(patient1))
-            return new ResponseEntity<>("Patient already registered", HttpStatus.BAD_REQUEST);
-        patientRepository.save(new ObjectMapper().convertValue(patient, Patient.class));
-        return new ResponseEntity<>("Patient registered", HttpStatus.OK);
+        try {
+            Patient patient1 = patientRepository.findByPhoneNo(patient.getPhoneNo());
+            if(patient1!=null)
+                return new ResponseEntity<Response>(new Response(true,null,"Patient already registered"), HttpStatus.OK);
+            patientRepository.save(patient);
+            return new ResponseEntity<Response>(new Response(true,null,"Patient registered Successfully"), HttpStatus.OK);
+
+        }
+        catch (Exception e)
+        {
+            return  new ResponseEntity<Response>(new Response(false,null,"Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
+
+
+        }
+
 
     }
 
-//    @Autowired
-//    private WaitTimeService waitTimeService;
-//    @GetMapping("/{patientId}")
-//    public ResponseEntity<?> getWaitTime(@PathVariable String patientId) {
-//
-//        try {
-//
-//            Patient patient = patientRepository.findById(patientId).get();
-//            int waitTime = waitTimeService.calculateWaitTime(patient.getDoctorId());
-//            return ResponseEntity.ok(waitTime);
-//        } catch (Exception e) {
-//            return ResponseEntity.ok("Patient not found");
-//        }
 
 
 
