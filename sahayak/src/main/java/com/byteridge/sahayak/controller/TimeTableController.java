@@ -92,24 +92,18 @@ public class TimeTableController {
     {
         try
         {
-
-//            System.out.println(doctor_id);
-//            System.out.println(date);
-
             LocalDate localDate = LocalDate.parse(date);
-
-            //    System.out.println(localDate);
 
             DayOfWeek day = localDate.getDayOfWeek();
 
             int dayOfWeek = day.getValue() -1 ;
-//            System.out.println(day);
-//            System.out.println(dayOfWeek);
+
             TimeTable doctorTimeTable = timeTableRepository.findByDoctorId(doctor_id).get(0);
 
             Doctor doctor = doctorsRepository.findOneById(doctor_id);
 
             Integer averageConsultationTime = doctor.getAverageConsultationTime();
+
             if(doctorTimeTable.getWeek_schedule().get(dayOfWeek).isEmpty())
             {
                 return new ResponseEntity(new Response(true, null,"Doctor Not Available on this Date"),HttpStatus.CONFLICT);
@@ -125,21 +119,12 @@ public class TimeTableController {
 
             Date endTimeFormat = formatter.parse(endTime);
 
-//            String formattedDateString = formatter.format(date);
-//            System.out.println(startTime);
-//            System.out.println(endTime);
-//            System.out.println(startTimeFormat.getTime());
-//            System.out.println(endTimeFormat.getTime());
-//            System.out.println(startTimeFormat);
-//            System.out.println(endTimeFormat);
-
             long difference_In_Time = endTimeFormat.getTime() - startTimeFormat.getTime();
 
             long difference_In_Minutes
                     = (difference_In_Time
                     / (1000 * 60));
 
-            //System.out.println(difference_In_Minutes);
 
             long numberOfSlots = difference_In_Minutes/60;
 
@@ -159,7 +144,6 @@ public class TimeTableController {
                 Date slotStartTime = startTimeFormat;
                 Date slotEndTime;
 
-                // System.out.println(cal.getTime());
 
                 if(endTimeFormat.compareTo(cal.getTime())<0)
                 {
@@ -181,17 +165,21 @@ public class TimeTableController {
                 long numberOfAppointmentsAllowed = difference_In_Slot_Time_Minutes/averageConsultationTime + 1;
 
                 String slotStartTimeString = slotStartTime.getHours()+ ":" + slotStartTime.getMinutes();
+
                 String slotEndTimeString = slotEndTime.getHours()+ ":" + slotEndTime.getMinutes();
+
                 long numberOfAlreadyBookedAppointments = waitTimeService.alreadyBookedAppointment(slotStartTimeString,slotEndTimeString,date,doctor_id.toString());
-                System.out.println(slotStartTimeString);
-                System.out.println(slotEndTimeString);
-                System.out.println(date);
-                System.out.println(numberOfAlreadyBookedAppointments);
+
                 long remainingAppointment = numberOfAppointmentsAllowed - numberOfAlreadyBookedAppointments;
+
                 Calendar approximateTurnCalender = Calendar.getInstance();
+
                 approximateTurnCalender.setTime(slotStartTime);
+
                 approximateTurnCalender.add(Calendar.MINUTE , (int) (numberOfAlreadyBookedAppointments * averageConsultationTime));
+
                 String approximateTurnTime = approximateTurnCalender.getTime().getHours() + ":" + approximateTurnCalender.getTime().getMinutes();
+
                 tmp.put("slot_start",slotStartTimeString);
 
                 tmp.put("slot_end",slotEndTimeString);

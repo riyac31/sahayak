@@ -55,7 +55,33 @@ public class AppointmentController{
         try
         {
             System.out.println(hospitalId.toString());
-            List<Appointment> appointmentList =  appointmentRepository.findByHospitalIdOrderByAppointmentStartTime(hospitalId);
+            List<Appointment> data =  appointmentRepository.findByHospitalIdOrderByAppointmentStartTime(hospitalId);
+            int appointmentSize = data.size();
+            List<Map<String,String>> appointmentList = new ArrayList<Map<String,String>>();
+            if(data.isEmpty() == true)
+            {
+                return  new ResponseEntity(new Response(true,appointmentList,"No Past Appointment"), HttpStatus.OK);
+            }
+            for(int i=0;i<appointmentSize;i++)
+            {
+                Appointment appointment = data.get(i);
+                Map<String,String> pastAppointment = new HashMap<>();
+                pastAppointment.put("date_of_appointment",appointment.getDateOfAppointment().toString());
+                pastAppointment.put("appointment_date",appointment.getAppointmentDate());
+                pastAppointment.put("appointment_start_time",appointment.getAppointmentStartTime());
+                pastAppointment.put("appointment_end_time",appointment.getAppointmentEndTime());
+                pastAppointment.put("approximate_turn_time",appointment.getApproximateTurnTime());
+                pastAppointment.put("doctor_name",appointment.getDoctor().getFull_name());
+                pastAppointment.put("doctor_education",appointment.getDoctor().getEducation());
+                pastAppointment.put("patient_name",appointment.getPatient().getPatientName());
+                pastAppointment.put("patient_phone",appointment.getPatient().getPhoneNo());
+                pastAppointment.put("patient_id",appointment.getPatientId());
+                pastAppointment.put("doctor_id",appointment.getDoctorId());
+                Hospital hospital = hospitalRepository.findOneById(appointment.getHospitalId());
+                pastAppointment.put("hospital_name",hospital.getHospitalName());
+                pastAppointment.put("hospital_address",hospital.getAddress().getArea() + " " + hospital.getAddress().getCityName() );
+                appointmentList.add(pastAppointment);
+            }
             log.info("Appointment Fetched Successfully");
             return new ResponseEntity(new Response(true,appointmentList,"Appointment Saved Successfully"), HttpStatus.OK);
         }
