@@ -77,8 +77,12 @@ public class TimeTableController {
         {
             System.out.println(doctor_id);
             List<TimeTable> timeTableList  = timeTableRepository.findByDoctorId(doctor_id);
+            Doctor doctor = doctorsRepository.findOneById(doctor_id);
+            Map<String,Object> data = new HashMap<String,Object>();
+            data.put("schedule",timeTableList);
+            data.put("doctor",doctor);
             log.info("Time Table For Doctor "+doctor_id+" fetched Successfully");
-            return new ResponseEntity(new Response(true,timeTableList,"Schedule Added Successfully"), HttpStatus.OK);
+            return new ResponseEntity(new Response(true, data,"Schedule Added Successfully"), HttpStatus.OK);
 
         }
         catch (Exception e)
