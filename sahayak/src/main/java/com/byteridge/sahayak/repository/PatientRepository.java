@@ -10,6 +10,7 @@ public interface PatientRepository extends MongoRepository<Patient,String> {
 //    public Patient findByEmail(String email);
     public Patient findByPhoneNo(String phone_no);
 
+    public Patient findOneById(String id);
 
 
 //    List<Patient> findByDoctorId(String DoctorId);

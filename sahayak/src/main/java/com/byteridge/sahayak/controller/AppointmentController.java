@@ -273,12 +273,7 @@ public class AppointmentController{
     {
         try
         {
-//            System.out.println(doctorId);
-//            System.out.println(appointmentDate);
-//            System.out.println(appointmentStartTime);
-//            System.out.println(appointmentEndTime);
-//            System.out.println(hour);
-//            System.out.println(min);
+
             Query query = new Query();
             query.addCriteria(Criteria.where("doctorId").is(doctorId));
             query.addCriteria(Criteria.where("appointmentDate").is(appointmentDate));
@@ -322,7 +317,9 @@ public class AppointmentController{
                 turnTime = turnTime.plusMinutes(min);
                 System.out.println("After");
                 System.out.println(turnTime.getHour() + ":" + turnTime.getMinute());
+
                 appointment.setApproximateTurnTime(turnTime.getHour() + ":" + turnTime.getMinute());
+
                 mongoTemplate.save(appointment);
             }
 

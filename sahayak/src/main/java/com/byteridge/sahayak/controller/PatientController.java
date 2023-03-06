@@ -6,6 +6,7 @@ import com.byteridge.sahayak.repository.PatientRepository;
 import com.byteridge.sahayak.request.PatientLogInRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ public class PatientController {
     PatientService patientService;
     @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
 
     @PostMapping("/addPatient")
@@ -69,4 +73,19 @@ public class PatientController {
 
         }
     }
+    @PostMapping("/storeToken/{patient_id}")
+    public ResponseEntity<?> storeToken(@PathVariable(value = "patientId") String patientId,@RequestBody String token){
+
+        try {
+            Patient patient = patientRepository.findOneById(patientId);
+            patient.setNotificationToken(token);
+            mongoTemplate.save(patient);
+            return new ResponseEntity(new Response(true, "Token Saved", "Token Saved"), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(new Response(true,e.getMessage(),"Something Went Wrong"), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
 }
